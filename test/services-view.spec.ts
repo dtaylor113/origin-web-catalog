@@ -36,7 +36,6 @@ describe('servicesView', () => {
     var ctrl = componentTest.isoScope.$ctrl;
     expect(ctrl.currentFilter).toBe('all');
     expect(ctrl.currentSubFilter).toBeNull();
-    expect(ctrl.expandSubCatRow).toBe(-1);
     expect(ctrl.orderingPanelvisible).toBe(false);
   });
 
@@ -48,9 +47,9 @@ describe('servicesView', () => {
     expect(jQuery(element).find('.services-categories a').length).toBe(5);
 
     // 12 sub categories ('All', 'Java', 'Javascript',...'Jenkins')
-    // 'Pipelines', 'Other', + the 4 Middleware sub-categories should be hidden since mock data doesn't have
+    // 'Pipelines' + the 4 Middleware sub-categories should be hidden since mock data doesn't have
     // items with these sub-categories.
-    expect(jQuery(element).find('.sub-cat-label').length).toBe(12);
+    expect(jQuery(element).find('.sub-cat-label').length).toBe(13);
 
     // Show the service item cards (hidden by default)
     componentTest.eventFire(element.querySelector('#sub-category-all'), 'click');
@@ -89,9 +88,6 @@ describe('servicesView', () => {
     var element = componentTest.rawElement;
 
     componentTest.eventFire(element.querySelector('#category-other'), 'click');
-
-    // no sub categories should exist under 'Other'
-    expect(jQuery(element).find('.sub-cat-label').length).toBe(0);
 
     // 1 'other' card
     expect(jQuery(element).find('.card-name').length).toBe(1);

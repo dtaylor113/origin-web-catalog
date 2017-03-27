@@ -10,14 +10,7 @@
 .services-view-container {
   padding-left: 0px;
 
-  .sub-category-row {
-    overflow-y: auto;
-    max-height: 400px;
 
-    &.other {
-      margin-top: 24px;
-    }
-  }
 
   .title {
     font-size: 36px;
@@ -45,29 +38,18 @@
     }
   }
 
-  .services-sub-category-rows {
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    .services-sub-categories:last-child {
-      margin-bottom: 0px;
-    }
-  }
-
   .services-sub-categories {
     font-size: 16px;
     padding-top: 4px;
     padding-left: 12px;
     margin-bottom: -8px;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
 
-    .card {
+    .sub-cat-card {
       background-color: @color-pf-black-100;
-      border-top: 1px solid @color-pf-black-400;
-      border-left: 1px solid @color-pf-black-400;
-      border-right: 1px solid @color-pf-black-400;
-      border-bottom: 1px solid @color-pf-black-400;
+      border: 1px solid @color-pf-black-400;
       padding: 6px;
       margin: 8px;
       cursor: pointer;
@@ -76,6 +58,11 @@
       display: flex;
       justify-content: center;
       align-items:center;
+      flex: 0 0 10em;
+
+      &.other {
+        display: none;
+      }
 
       .inner-content {
         display: flex;
@@ -84,19 +71,40 @@
         align-items:center;
       }
 
-      &.current-filter {
+      &.active {
         background-color: @color-pf-white;
-        border-bottom: none;
         border: none;
         color: inherit;
         height: 140px;
         bottom: -10px;
-        position: relative;
+        margin-bottom: 100px;
         .inner-content {
           position: relative;
           bottom: 9px;
         }
       }
+
+      .card-expansion {
+        position: absolute;
+        top: 6px;    // will be calculated by controller
+        left: 0px;
+        right: 0px;
+        margin-top: 103px;
+        padding: 2px;
+        min-height: 186px;
+        max-height: 400px;
+        overflow-y: auto;
+
+        @media (min-width: @screen-sm-min) {
+          right: 317px;
+          margin-top: 0px;
+        }
+
+        &.other {
+          margin-top: 24px;
+        }
+      }
+
       .sub-cat-icon {
         font-size: 42px;
       }
