@@ -1,9 +1,8 @@
 import * as angular from 'angular';
 import * as _ from 'lodash';
-import * as $ from 'jquery';
 
 export class ServicesViewController implements angular.IController {
-  static $inject = ['Constants', 'Catalog', '$filter', '$scope', '$timeout'];
+  static $inject = ['Constants', 'Catalog', '$filter', '$scope'];
 
   public ctrl: any = this;
   public cardViewConfig: any;
@@ -11,12 +10,10 @@ export class ServicesViewController implements angular.IController {
   private catalog: any;
   private $filter: any;
   private $scope: any;
-  private $timeout: any;
   private serviceClassesLoaded = false;
   private imageStreamsLoaded = false;
-  private debounceResize: any;
 
-  constructor(constants: any, catalog: any, $filter: any, $scope: any, $timeout: any) {
+  constructor(constants: any, catalog: any, $filter: any, $scope: any) {
     this.cardViewConfig = {
       selectItems: false,
       showSelectBox: false,
@@ -26,7 +23,6 @@ export class ServicesViewController implements angular.IController {
     this.catalog = catalog;
     this.$filter = $filter;
     this.$scope = $scope;
-    this.$timeout = $timeout;
     this.ctrl.loading = true;
   }
 
@@ -41,9 +37,6 @@ export class ServicesViewController implements angular.IController {
     this.$scope.$on('cancelOrder', () => {
       this.ctrl.closeOrderingPanel();
     });
-
-    this.debounceResize = _.debounce(this.onWindowResize, 250);
-    angular.element(window).bind('resize', this.debounceResize);
   }
 
   public $onChanges(onChangesObj: angular.IOnChangesObject) {
@@ -81,13 +74,11 @@ export class ServicesViewController implements angular.IController {
 
     this.ctrl.currentFilter = category;
     this.ctrl.currentSubFilter = subCategory || 'all';
-    this.positionExpansionCard();
   }
 
   public toggleExpand(subCategory: string) {
     if (this.ctrl.currentSubFilter === subCategory) {
       this.ctrl.currentSubFilter = null;
-      this.positionExpansionCard();
     } else {
       this.filterByCategory(this.ctrl.currentFilter, subCategory, false);
     }
@@ -103,31 +94,6 @@ export class ServicesViewController implements angular.IController {
     return subCats;
   };
 
-  public positionExpansionCard() {
-    // set the top position of the expansion card
-    // do in next cycle, after .active card set
-    this.$timeout(() => {
-      // reset all sub-cat-card 'gaps'/margin-bottoms
-      $(".services-sub-categories .sub-cat-card").css('margin-bottom', '');
-
-      let activeCard: any = document.querySelector(".services-sub-categories .active");
-      let expansionCard: any = document.querySelector(".card-expansion");
-
-      if (activeCard) {
-        let activeCardTop = activeCard.getBoundingClientRect().top;
-        let expansionCardHeight = expansionCard.getBoundingClientRect().height;
-        angular.element(expansionCard).css('top', (activeCardTop + window.scrollY - 15) + 'px');
-        angular.element(activeCard).css('margin-bottom', (expansionCardHeight) + 'px');
-      } else if (this.ctrl.currentFilter === 'other') {
-        // The 'Other' main category only has a placeholder for sub-category, place expansion card over it and
-        // under main categories
-        let mainCategoriesBottom: any = document.querySelector(".services-categories").getBoundingClientRect().bottom;
-        let subCatHeight: any = document.querySelector(".services-sub-categories .card").getBoundingClientRect().height;
-        angular.element(expansionCard).css('top', (mainCategoriesBottom + window.scrollY - subCatHeight - 24) + 'px');
-      }
-    }, 50);
-  }
-
   public handleClick = (item: any, e: any) => {
     this.ctrl.serviceToOrder = item;
     this.ctrl.openOrderingPanel();
@@ -139,10 +105,6 @@ export class ServicesViewController implements angular.IController {
 
   public closeOrderingPanel = () => {
     this.ctrl.orderingPanelvisible = false;
-  };
-
-  private onWindowResize = () => {
-    this.positionExpansionCard();
   };
 
   private updateAll() {
