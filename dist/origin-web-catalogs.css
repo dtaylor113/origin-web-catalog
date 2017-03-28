@@ -666,7 +666,7 @@
   color: inherit;
   display: inline-block;
   height: 140px;
-  margin-bottom: 280px;
+  margin-bottom: 150px;
 }
 .services-view-container .services-sub-categories .sub-cat-card.active .inner-content {
   padding-bottom: 20px;
@@ -675,11 +675,10 @@
   position: absolute;
   left: 0px;
   right: 0px;
-  height: 280px;
   overflow-y: auto;
 }
 .services-view-container .services-sub-categories .sub-cat-card .card-expansion .card-view-pf {
-  height: 100%;
+  max-height: 410px;
 }
 .services-view-container .services-sub-categories .sub-cat-card .sub-cat-icon {
   font-size: 42px;

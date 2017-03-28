@@ -1,8 +1,9 @@
 import * as angular from 'angular';
 import * as _ from 'lodash';
+import * as $ from 'jquery';
 
 export class ServicesViewController implements angular.IController {
-  static $inject = ['Constants', 'Catalog', '$filter', '$scope'];
+  static $inject = ['Constants', 'Catalog', '$filter', '$scope', '$timeout'];
 
   public ctrl: any = this;
   public cardViewConfig: any;
@@ -10,10 +11,12 @@ export class ServicesViewController implements angular.IController {
   private catalog: any;
   private $filter: any;
   private $scope: any;
+  private $timeout: any;
   private serviceClassesLoaded = false;
   private imageStreamsLoaded = false;
+  private debounceResize: any;
 
-  constructor(constants: any, catalog: any, $filter: any, $scope: any) {
+  constructor(constants: any, catalog: any, $filter: any, $scope: any, $timeout: any) {
     this.cardViewConfig = {
       selectItems: false,
       showSelectBox: false,
@@ -23,6 +26,7 @@ export class ServicesViewController implements angular.IController {
     this.catalog = catalog;
     this.$filter = $filter;
     this.$scope = $scope;
+    this.$timeout = $timeout;
     this.ctrl.loading = true;
   }
 
@@ -37,6 +41,10 @@ export class ServicesViewController implements angular.IController {
     this.$scope.$on('cancelOrder', () => {
       this.ctrl.closeOrderingPanel();
     });
+
+    this.debounceResize = _.debounce(this.resizeExpansion, 50, { maxWait: 250 });
+    angular.element(window).bind('resize', this.debounceResize);
+    $(window).on('resize.services', this.debounceResize);
   }
 
   public $onChanges(onChangesObj: angular.IOnChangesObject) {
@@ -51,6 +59,10 @@ export class ServicesViewController implements angular.IController {
       this.imageStreamsLoaded = true;
       this.updateImageStreams();
     }
+  }
+
+  public $onDestroy() {
+    $(window).off('resize.services');
   }
 
   public filterByCategory(category: string, subCategory: string, updateSubCategories: boolean) {
@@ -74,11 +86,13 @@ export class ServicesViewController implements angular.IController {
 
     this.ctrl.currentFilter = category;
     this.ctrl.currentSubFilter = subCategory || 'all';
+    this.updateActiveCardStyles();
   }
 
   public toggleExpand(subCategory: string) {
     if (this.ctrl.currentSubFilter === subCategory) {
       this.ctrl.currentSubFilter = null;
+      this.updateActiveCardStyles();
     } else {
       this.filterByCategory(this.ctrl.currentFilter, subCategory, false);
     }
@@ -146,4 +160,15 @@ export class ServicesViewController implements angular.IController {
     });
     return retSvcs;
   };
+
+  private resizeExpansion() {
+    let activeCard = $('.sub-cat-card.active');
+    let contentHeight = activeCard.find('.card-view-pf').outerHeight();
+    activeCard.css('margin-bottom', contentHeight + 'px');
+  }
+
+  private updateActiveCardStyles() {
+    $('.sub-cat-card').css('margin-bottom', '');
+    this.$timeout(this.resizeExpansion, 50);
+  }
 }

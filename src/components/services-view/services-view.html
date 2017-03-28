@@ -23,9 +23,8 @@
     <div class="services-sub-categories">
       <div ng-repeat="subCategory in $ctrl.subCategories"
            id="{{'sub-category-'+subCategory.id}}"
-           class="sub-cat-card" ng-class="{'active': $ctrl.currentSubFilter === subCategory.id}"
-           ng-click="$ctrl.toggleExpand(subCategory.id)">
-        <div class="inner-content">
+           class="sub-cat-card" ng-class="{'active': $ctrl.currentSubFilter === subCategory.id}">
+        <div class="inner-content" ng-click="$ctrl.toggleExpand(subCategory.id)">
           <div class="sub-cat-icon {{subCategory.icon}}" ng-if="subCategory.icon"></div>
           <div class="sub-cat-label">{{subCategory.label}}</div>
         </div>
