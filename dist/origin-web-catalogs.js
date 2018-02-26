@@ -1,4 +1,4 @@
-webpackJsonp([ 0, 1 ], [ function(e, t) {
+webpackJsonp([ 0 ], [ function(e, t) {
     e.exports = _;
 }, function(e, t) {
     e.exports = angular;
@@ -880,9 +880,9 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
             var t = "";
             return 1 === e.length ? t = e[0] : 2 === e.length ? t = e.join(" and ") : e.length > 2 && (t = e.slice(0, -1).join(", ") + ", and " + e.slice(-1)), 
             t + ".";
-        }, e;
+        }, e.$inject = [ "$filter", "$q", "Constants", "APIService", "DataService", "Logger" ], 
+        e;
     }();
-    a.$inject = [ "$filter", "$q", "Constants", "APIService", "DataService", "Logger" ], 
     t.CatalogService = a;
     var s = function() {
         function e(e, t) {
@@ -994,9 +994,9 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
             }), t.unshift(e), t = n.take(t, 4), this.setRecentlyViewedItems(t);
         }, e.prototype.setRecentlyViewedItems = function(e) {
             localStorage.setItem("catalog-recently-viewed-services", JSON.stringify(e)), this.$rootScope.$emit("recently-viewed-updated");
-        }, e;
+        }, e.$inject = [ "$rootScope" ], e;
     }();
-    i.$inject = [ "$rootScope" ], t.RecentlyViewedServiceItems = i;
+    t.RecentlyViewedServiceItems = i;
 }, function(e, t) {
     e.exports = '<pf-filter-panel config="$ctrl.config">\n  <div class="filter-panel-container">\n    <input type="text" ng-model="$ctrl.keywordFilter.value"\n           class="keyword-filter form-control"\n           placeholder="{{$ctrl.keywordFilter.placeholder}}"\n           ng-keypress="$ctrl.onKeywordKeyPress($event)"\n           autocorrect="off"\n           autocapitalize="none"\n           spellcheck="false">\n    <div class="category" ng-repeat="filter in $ctrl.filterPanelModel" ng-if="!$first">\n      {{filter.title}}\n      <span\n        class="pficon pficon-info vendor-info-icon"\n        data-toggle="tooltip"\n        aria-hidden="true"\n        data-original-title="This filter will only apply to items which contain publisher information. Items that do not have a publisher will not be shown in the filter results.">\n      </span>\n      <ul>\n        <li ng-repeat="value in filter.values">\n          <div class="checkbox">\n            <label class="category-option-label">\n              <input type="checkbox"\n                     ng-model="value.selected"\n                     ng-change="$ctrl.filterChanged()">\n              {{value.title}}\n            </label>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n</pf-filter-panel>\n';
 }, function(e, t) {
@@ -1141,9 +1141,9 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
                     });
                 }
             });
-        }, e;
+        }, e.$inject = [ "$scope", "$timeout", "Catalog" ], e;
     }();
-    a.$inject = [ "$scope", "$timeout", "Catalog" ], t.CatalogFilterController = a;
+    t.CatalogFilterController = a;
 }, function(e, t, r) {
     "use strict";
     t.__esModule = !0;
@@ -1215,16 +1215,16 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
                 }
                 return r;
             }
+        }, e.ALLOWED_FORM_INPUT_TYPES = {
+            fieldset: !0,
+            text: !0,
+            textarea: !0,
+            password: !0,
+            checkbox: !0,
+            select: !0
         }, e;
     }();
-    a.ALLOWED_FORM_INPUT_TYPES = {
-        fieldset: !0,
-        text: !0,
-        textarea: !0,
-        password: !0,
-        checkbox: !0,
-        select: !0
-    }, t.CatalogParametersController = a;
+    t.CatalogParametersController = a;
 }, function(e, t, r) {
     "use strict";
     t.__esModule = !0;
@@ -1277,14 +1277,14 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
                 text: "View all " + i + " results for Keyword: " + e,
                 name: e
             }), a;
-        }, e;
+        }, e.$inject = [ "$rootScope", "$scope", "$timeout", "$q", "Catalog", "KeywordService" ], 
+        e;
     }();
-    a.$inject = [ "$rootScope", "$scope", "$timeout", "$q", "Catalog", "KeywordService" ], 
     t.CatalogSearchController = a;
 }, function(e, t, r) {
     "use strict";
     t.__esModule = !0;
-    var n = r(1), i = r(0), a = r(69), s = function() {
+    var n = r(1), i = r(0), a = r(70), s = function() {
         function e(e, t, r, n, a, s, o, c, l, d, p) {
             var h = this;
             this.ctrl = this, this.watches = [], this.clearValidityWatcher = function() {
@@ -1395,7 +1395,7 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
         }, e.prototype.onRepositoryChanged = function() {
             this.gitRef = "", this.contextDir = "";
         }, e.prototype.navigateToAdvancedForm = function() {
-            var e = "project/{project}/create/fromimage?imageStream={imageStream}&imageTag={imageTag}&namespace={namespace}&displayName={displayName}&name={name}&sourceURI={sourceURI}&sourceRef={sourceRef}&contextDir={contextDir}&advanced=true", t = a.expand(e, {
+            var e = a.expand("project/{project}/create/fromimage?imageStream={imageStream}&imageTag={imageTag}&namespace={namespace}&displayName={displayName}&name={name}&sourceURI={sourceURI}&sourceRef={sourceRef}&contextDir={contextDir}&advanced=true", {
                 project: this.ctrl.selectedProject.metadata.name,
                 imageStream: this.ctrl.imageStream.resource.metadata.name,
                 imageTag: this.ctrl.istag.name,
@@ -1406,7 +1406,7 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
                 sourceRef: this.gitRef || "",
                 contextDir: this.contextDir || ""
             }).toString();
-            this.$location.url(t), this.closePanel();
+            this.$location.url(e), this.closePanel();
         }, e.prototype.getTagReference = function(e) {
             if (!e.from || "ImageStreamTag" !== e.from.kind) return null;
             var t = i.get(this, "ctrl.imageStream.resource.metadata.namespace");
@@ -1513,9 +1513,9 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
                     e.ctrl.updating = !1;
                 });
             }
-        }, e;
+        }, e.$inject = [ "$scope", "$filter", "$location", "$q", "BuilderAppService", "ProjectsService", "DataService", "APIService", "BindingService", "Logger", "Constants" ], 
+        e;
     }();
-    s.$inject = [ "$scope", "$filter", "$location", "$q", "BuilderAppService", "ProjectsService", "DataService", "APIService", "BindingService", "Logger", "Constants" ], 
     t.CreateFromBuilderController = s;
 }, function(e, t, r) {
     "use strict";
@@ -1545,9 +1545,9 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
             });
         }, e.prototype.$onDestroy = function() {
             this.ctrl.orderingPanelVisible && this.closeOrderingPanel();
-        }, e;
+        }, e.$inject = [ "$scope", "Catalog", "RecentlyViewedServiceItems" ], e;
     }();
-    i.$inject = [ "$scope", "Catalog", "RecentlyViewedServiceItems" ], t.LandingPageController = i;
+    t.LandingPageController = i;
 }, function(e, t, r) {
     "use strict";
     t.__esModule = !0;
@@ -1776,9 +1776,9 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
             } ]), r;
         }, e.prototype.isNewProject = function() {
             return !this.ctrl.selectedProject || !i.has(this.ctrl.selectedProject, "metadata.uid");
-        }, e;
+        }, e.$inject = [ "$scope", "$filter", "APIService", "ApplicationsService", "ProjectsService", "DataService", "BindingService", "Logger", "Constants", "DNS1123_SUBDOMAIN_VALIDATION" ], 
+        e;
     }();
-    a.$inject = [ "$scope", "$filter", "APIService", "ApplicationsService", "ProjectsService", "DataService", "BindingService", "Logger", "Constants", "DNS1123_SUBDOMAIN_VALIDATION" ], 
     t.OrderServiceController = a;
 }, function(e, t, r) {
     "use strict";
@@ -1804,9 +1804,9 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
             e.showPanel && (this.ctrl.showPanel ? this.showDialog() : this.hideDialog());
         }, e.prototype.$onDestroy = function() {
             i("body").removeClass("overlay-open");
-        }, e;
+        }, e.$inject = [ "$document", "$scope" ], e;
     }();
-    a.$inject = [ "$document", "$scope" ], t.OverlayPanelController = a;
+    t.OverlayPanelController = a;
 }, function(e, t, r) {
     "use strict";
     t.__esModule = !0;
@@ -1903,10 +1903,10 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
                     return !e;
                 });
             }
-        }, e;
+        }, e.$inject = [ "$filter", "$rootScope", "$scope", "$window", "AuthService", "Constants", "DataService", "Logger", "ProjectsService", "RecentlyViewedProjectsService", "RecentlyViewedServiceItems" ], 
+        e.MAX_PROJETS_TO_WATCH = 250, e;
     }();
-    a.$inject = [ "$filter", "$rootScope", "$scope", "$window", "AuthService", "Constants", "DataService", "Logger", "ProjectsService", "RecentlyViewedProjectsService", "RecentlyViewedServiceItems" ], 
-    a.MAX_PROJETS_TO_WATCH = 250, t.ProjectsSummaryController = a;
+    t.ProjectsSummaryController = a;
 }, function(e, t, r) {
     "use strict";
     t.__esModule = !0;
@@ -1936,9 +1936,9 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
         }, e.prototype.updateListExpandVisibility = function() {
             var e = this.$window.innerWidth, t = i.size(this.ctrl.saasOfferings);
             this.ctrl.itemsOverflow = t > 4 || t > 2 && e < this.BREAKPOINTS.screenLgMin;
-        }, e;
+        }, e.$inject = [ "$scope", "$window", "$element", "BREAKPOINTS" ], e;
     }();
-    a.$inject = [ "$scope", "$window", "$element", "BREAKPOINTS" ], t.SaasListController = a;
+    t.SaasListController = a;
 }, function(e, t, r) {
     "use strict";
     t.__esModule = !0;
@@ -2051,10 +2051,10 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
             this.ctrl.availableProjects ? this.updateProjects(this.ctrl.availableProjects) : this.ProjectsService.list().then(function(t) {
                 e.updateProjects(t.by("metadata.name"));
             });
-        }, e;
+        }, e.$inject = [ "$filter", "$scope", "AuthService", "AuthorizationService", "KeywordService", "Logger", "ProjectsService", "RecentlyViewedProjectsService" ], 
+        e.LARGE_PROJECT_LIST_SIZE = 500, e;
     }();
-    a.$inject = [ "$filter", "$scope", "AuthService", "AuthorizationService", "KeywordService", "Logger", "ProjectsService", "RecentlyViewedProjectsService" ], 
-    a.LARGE_PROJECT_LIST_SIZE = 500, t.SelectProjectController = a;
+    t.SelectProjectController = a;
 }, function(e, t, r) {
     "use strict";
     t.__esModule = !0;
@@ -2189,10 +2189,10 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
             this.$timeout(function() {
                 return e.resizeExpansion(!0);
             });
-        }, e;
+        }, e.$inject = [ "Constants", "Catalog", "KeywordService", "Logger", "HTMLService", "$element", "$filter", "$rootScope", "$scope", "$timeout" ], 
+        e.MAX_RESIZE_RETRIES = 20, e;
     }();
-    a.$inject = [ "Constants", "Catalog", "KeywordService", "Logger", "HTMLService", "$element", "$filter", "$rootScope", "$scope", "$timeout" ], 
-    a.MAX_RESIZE_RETRIES = 20, t.ServicesViewController = a;
+    t.ServicesViewController = a;
 }, function(e, t, r) {
     "use strict";
     t.__esModule = !0;
@@ -2337,12 +2337,10 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
             }, function(e) {
                 t.ctrl.error = i.get(e, "data");
             });
-        }, e;
+        }, e.$inject = [ "$scope", "$filter", "$q", "APIService", "BindingService", "DataService", "Logger", "SecretsService" ], 
+        e;
     }();
-    a.$inject = [ "$scope", "$filter", "$q", "APIService", "BindingService", "DataService", "Logger", "SecretsService" ], 
     t.UpdateServiceController = a;
-}, function(e, t) {
-    e.exports = URI;
 }, function(e, t, r) {
     "use strict";
     t.__esModule = !0;
@@ -2361,4 +2359,6 @@ webpackJsonp([ 0, 1 ], [ function(e, t) {
         e.put("decorators/bootstrap/checkboxes.html", r(20)), e.put("decorators/bootstrap/default.html", r(21)), 
         e.put("decorators/bootstrap/select.html", r(22));
     } ]);
-} ], [ 70 ]);
+}, function(e, t) {
+    e.exports = URI;
+} ], [ 69 ]);

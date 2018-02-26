@@ -58,7 +58,7 @@ if (mockServicesModule.useMockServices() !== true) {
   commonServices = mockServicesModule.moduleName;
 }
 
-angular
+let catalogAppModule = angular
   .module(catalogApp, ['webCatalog', 'openshiftCommonUI', commonServices, 'ui.router', 'patternfly', 'angularMoment', 'schemaForm'])
   .config(routesConfig)
   .component('oauth', oauth)
@@ -77,3 +77,17 @@ angular
   });
 
 hawtioPluginLoader.addModule(catalogApp);
+
+import { downgradeComponent } from '@angular/upgrade/static';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { InfoStatusCardComponent } from 'patternfly-ng/card/info-status-card/info-status-card.component';
+import { AppModule } from "./app.module";
+require('zone.js');
+
+catalogAppModule.directive(
+    'pfngInfoStatusCard',
+    downgradeComponent({ component: InfoStatusCardComponent }) as angular.IDirectiveFactory
+);
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+

@@ -38,6 +38,19 @@ export class HomePageController {
     this.authService.withUser().then(() => {
       this.update();
     });
+    this.ctrl.infoCardConfig = {
+        showTopBorder: true,
+        htmlContent: true,
+        title: 'TinyCore-local',
+        href: '//www.redhat.com/',
+        iconStyleClass: 'fa fa-shield',
+        info: [
+            'VM Name: aapdemo002',
+            'Host Name: localhost.localdomian',
+            'IP Address: 10.9.62.100',
+            'Power status: on'
+        ]
+    };
   };
 
   public update() {

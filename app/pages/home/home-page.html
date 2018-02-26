@@ -12,5 +12,6 @@
   </landingbody>
   <landingside>
     <projects-summary start-tour="$ctrl.tourConfig.enabled ? $ctrl.startGuidedTour : undefined" catalog-items="$ctrl.catalogItems" base-project-url="{{$ctrl.baseProjectUrl}}" projects-url="{{$ctrl.projectsUrl}}"></projects-summary>
+    <pfng-info-status-card [config]="$ctrl.infoCardConfig"></pfng-info-status-card>
   </landingside>
 </landing-page>
